@@ -1,6 +1,9 @@
 from django.shortcuts import render
-from django.views.generic.base import TemplateView
+
+from .stocks import get_random_context
 
 
-class Index(TemplateView):
+def index(request):
+    context = get_random_context()
     template_name = 'index.html'
+    return render(request, template_name, context)
