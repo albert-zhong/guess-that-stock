@@ -54,20 +54,16 @@ def get_random_context():
     guessing_string = base64.b64encode(guessing_buffer.read())
     guessing_uri = urllib.parse.quote(guessing_string)
     plot.close()
-
-    # full data on the bottom
+    
     full_data = data['Close']
-    # throw away plots
-    guessing_data.plot()
-    guessing_data.plot()
-    # real data plot
     full_data.plot(title=f'{ticker} Stock Price')
-    guessing_data.plot()
     before_two_weeks_date = end_date - datetime.timedelta(days=20)
     price_last_shown = data.iloc[-15]['Close']
     price_two_weeks_later = data.iloc[-1]['Close']
     color = 'green' if price_two_weeks_later > price_last_shown else 'red'
     plot.axvspan(*mdates.date2num([before_two_weeks_date, end_date]), color=color, alpha=0.5)
+    later_data = data.iloc[-14:]['Close']
+    later_data.plot(color=color)
     full_buffer = io.BytesIO()
     plot.savefig(full_buffer, format='png')
     full_buffer.seek(0)

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,32 +12,14 @@
             <h1>💰 Guess That Stock</h1>
             <h3>Will the stock's price be higher or lower in 2 weeks?</h3>
             <img src="data:image/png;base64,{{ guessing_chart }}" id="chart">
-            <style>
-            .centerSpan {
-                width:100%;
-                text-align:center;
-            }
-            </style>
             <div class="row">
-                <div class = "centerSpan">
+                <div class="centerSpan">
                     <p id="answer">
                         <mark id="shortMessage"></mark>
                         <span id="longMessage"></span>
                     </p>
                 </div>
             </div>
-
-            <style>
-            .center {
-              margin: 0;
-              position: absolute;
-              top: 94%;
-              left: 50%;
-              -ms-transform: translate(-50%, -50%);
-              transform: translate(-50%, -50%);
-            }
-            </style>
-
             <div class="row">
                 <div class="center">
                     <button class="large tertiary" onclick="showAnswer(true)" id="increaseButton">Increase</button>
@@ -44,39 +27,46 @@
                 </div>
             </div>
         </div>
+        <style>
+            .center {
+                margin: 0;
+                position: absolute;
+                top: 94%;
+                left: 50%;
+                -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+            }
+            .centerSpan {
+                width: 100%;
+                text-align: center;
+            }
+        </style>
         <script>
             const priceLastShown = toFixed({{ price_last_shown }}, 2);
             const priceTwoWeeksLater = toFixed({{ price_two_weeks_later }}, 2);
-
             const didIncrease = priceTwoWeeksLater > priceLastShown;
-
             function showAnswer(userAnswer) {
                 showMessage(userAnswer);
                 swapChart();
                 disableButtons();
             }
-
             function showMessage(userAnswer) {
                 const shortMessage = document.getElementById('shortMessage');
                 shortMessage.innerText = (userAnswer === didIncrease) ? 'You got it right!' : 'You were incorrect!';
                 shortMessage.className = (userAnswer === didIncrease) ? 'tertiary' : 'secondary';
-
                 const longMessage = document.getElementById('longMessage');
                 const longMessageText = `The {{ ticker }} stock price ${didIncrease ? '📈 increased' : '📉 decreased'} from
                 $${priceLastShown} to $${priceTwoWeeksLater}. Refresh 🔄 to play another round.`;
                 longMessage.innerText = longMessageText;
             }
-
             function toFixed(num, fixed) {
                 const re = new RegExp('^-?\\d+(?:\.\\d{0,' + (fixed || -1) + '})?');
                 return num.toString().match(re)[0];
             }
-
             function swapChart() {
                 const chart = document.getElementById('chart');
                 chart.setAttribute('src', 'data:image/png;base64,{{ full_chart }}');
             }
-
             function disableButtons() {
                 const increaseButton = document.getElementById('increaseButton');
                 const decreaseButton = document.getElementById('decreaseButton');
