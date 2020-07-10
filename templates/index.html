@@ -6,20 +6,42 @@
         <link rel="stylesheet" href="https://cdn.rawgit.com/Chalarangelo/mini.css/v3.0.1/dist/mini-default.min.css">
         <title>Guess That Stock</title>
     </head>
-    <body>
+    <center><body>
         <div class="container">
             <h1>💰 Guess That Stock</h1>
             <h3>Will the stock's price be higher or lower in 2 weeks?</h3>
             <img src="data:image/png;base64,{{ guessing_chart }}" id="chart">
+            <style>
+            .centerSpan {
+                width:100%;
+                text-align:center;
+            }
+            </style>
             <div class="row">
-                <p id="answer">
-                    <mark id="shortMessage"></mark>
-                    <span id="longMessage"></span>
-                </p>
+                <div class = "centerSpan">
+                    <p id="answer">
+                        <mark id="shortMessage"></mark>
+                        <span id="longMessage"></span>
+                    </p>
+                </div>
             </div>
+
+            <style>
+            .center {
+              margin: 0;
+              position: absolute;
+              top: 94%;
+              left: 50%;
+              -ms-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%);
+            }
+            </style>
+
             <div class="row">
-                <button class="large tertiary" onclick="showAnswer(true)" id="increaseButton">Increase</button>
-                <button class="large secondary" onclick="showAnswer(false)" id="decreaseButton">Decrease</button>
+                <div class="center">
+                    <button class="large tertiary" onclick="showAnswer(true)" id="increaseButton">Increase</button>
+                    <button class="large secondary" onclick="showAnswer(false)" id="decreaseButton">Decrease</button>
+                </div>
             </div>
         </div>
         <script>
@@ -62,5 +84,5 @@
                 decreaseButton.setAttribute('disabled', '');
             }
         </script>
-    </body>
+    </body></center>
 </html>

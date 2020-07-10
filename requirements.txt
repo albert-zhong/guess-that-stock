@@ -21,3 +21,5 @@ toml==0.10.1
 urllib3==1.25.9
 wrapt==1.12.1
 yfinance==0.1.54
+
+matplotlib~=3.2.2

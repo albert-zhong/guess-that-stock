@@ -55,8 +55,14 @@ def get_random_context():
     guessing_uri = urllib.parse.quote(guessing_string)
     plot.close()
 
+    # full data on the bottom
     full_data = data['Close']
+    # throw away plots
+    guessing_data.plot()
+    guessing_data.plot()
+    # real data plot
     full_data.plot(title=f'{ticker} Stock Price')
+    guessing_data.plot()
     before_two_weeks_date = end_date - datetime.timedelta(days=20)
     price_last_shown = data.iloc[-15]['Close']
     price_two_weeks_later = data.iloc[-1]['Close']
@@ -67,6 +73,9 @@ def get_random_context():
     full_buffer.seek(0)
     full_string = base64.b64encode(full_buffer.read())
     full_uri = urllib.parse.quote(full_string)
+
+    # old data overlaid to create a diff color
+
     plot.close()
 
     return {
